@@ -37,28 +37,42 @@ int main (void)
 {
     struct stack stk = {};
     stack_constructor(&stk, 2);
-    
+
     int temp = 0;
-
+    
+    stack_error(&stk);
     stack_push(&stk, 10);
+    stack_error(&stk);
     stack_dump(&stk);
-    
+
+    stack_error(&stk);
     stack_push(&stk, 20);
+    stack_error(&stk);
     stack_dump(&stk);
 
+    stack_error(&stk);
     stack_push(&stk, 30);
+    stack_error(&stk);
     stack_dump(&stk);
 
+    stack_error(&stk);
     stack_push(&stk, 40);
+    stack_error(&stk);
     stack_dump(&stk);
 
+    stack_error(&stk);
     stack_pop(&stk, &temp);
+    stack_error(&stk);
     stack_dump(&stk);
     
+    stack_error(&stk);
     stack_pop(&stk, &temp);
+    stack_error(&stk);
     stack_dump(&stk);
 
+    stack_error(&stk);
     stack_push(&stk, 50);
+    stack_error(&stk);
     stack_dump(&stk);
 
 }
@@ -83,12 +97,14 @@ int stack_destroy(struct stack* stk)
 
 int stack_dump(struct stack* stk)
 {
+    printf("______________________________________________________\n");
     for (int i = 0; i < stk->capasity; i++)
-        printf ("%g  ", stk->data[i]);
+        printf ("\033[34mstack->data[%d] = %g  \033[0m\n",i, stk->data[i]);
 
-    printf("\n\nstack->data adress: %p\n", stk->data);
-    printf("stack->capasity:    %d\n", stk->capasity);
-    printf("stack->size:        %d\n", stk->size);
+    printf("\n\n\033[31mstack->data adress: %p\033[0m\n", stk->data);
+    printf("\033[35mstack->capasity:    %d\033[0m\n", stk->capasity);
+    printf("\033[35mstack->size:        %d\033[0m\n", stk->size);
+    printf("______________________________________________________\n\n");
 
     getchar();
 }
@@ -98,22 +114,22 @@ int stack_error(struct stack* stk)
     int error = 0;
     if (stk->data == NULL)
     {
-        error = STACK_DATA_IS_NULL;
+        printf("Error is %d\n", STACK_DATA_IS_NULL);
     }
-    else if(stk->size >= stk->capasity)
+    if(stk->size > stk->capasity)
     {
-        error = STACK_COPASITY_LESS_SIZE;
+        printf("Error is %d\n", STACK_COPASITY_LESS_SIZE);
     }
-    else if (stk->size < 0)
+    if (stk->size < 0)
     {
-        error = STACK_SIZE_IS_ERROR;
+        printf("Error is %d\n", STACK_SIZE_IS_ERROR);
     }
-    else if (stk->capasity < 0)
+    if (stk->capasity < 0)
     {
-        error = STACK_CAPASITY_IS_ERROR;
+        printf("Error is %d\n", STACK_CAPASITY_IS_ERROR);
     }
 
-    return error;
+    return 1;
 }
 void stack_realloc(struct stack* stk)
 {
