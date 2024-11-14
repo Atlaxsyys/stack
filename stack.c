@@ -79,6 +79,7 @@ int stack_error(struct stack* stk)
 
     return 1;
 }
+
 void stack_realloc(struct stack* stk)
 {
     stk->capacity *= 2;
@@ -89,6 +90,7 @@ void stack_realloc(struct stack* stk)
         stk->data[stk->size + i] = POIZON_NUMBER;
 
 }
+
 int stack_push(struct stack* stk, stackElem number)
 {
     if (stk->capacity <= stk->size)
