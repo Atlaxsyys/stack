@@ -1,5 +1,7 @@
 #include "stack.h"
 #include <stdio.h>
+
+
 int main(void)
 {
     struct stack stk = {};
